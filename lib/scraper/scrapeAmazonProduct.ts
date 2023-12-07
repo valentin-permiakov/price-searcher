@@ -1,6 +1,6 @@
 import axios from 'axios';
 import * as cheerio from 'cheerio';
-import { extractCurrency, extractPrice } from '../utils';
+import { extractCurrency, extractDescription, extractPrice } from '../utils';
 
 const scrapeAmazonProduct = async (url: string) => {
   if (!url) return;
@@ -31,19 +31,14 @@ const scrapeAmazonProduct = async (url: string) => {
     const title = $('#productTitle').text().trim();
     const currentPrice = extractPrice(
       $('.priceToPay span.a-price-whole'),
-      $('a.size.base.a-color-price'),
-      // $('.a-button-selected .a-color-base'),
-      // $('#price'),
-      // $('.a-price.a-text-price'),
-      $('.apexPriceToPay .a-offscreen'),
-      $('a-price.aok-align-center .a-offscreen')
+      $('.a.size.base.a-color-price'),
+      $('.a-button-selected .a-color-base')
     );
 
     const originalPrice = extractPrice(
-      $('span.a-offscreen:first'),
       $('#priceblock_ourprice'),
+      $('.a-price.a-text-price span.a-offscreen'),
       $('#listPrice'),
-      $('.basisPrice span.a-offscreen'),
       $('#priceblock_dealprice'),
       $('.a-size-base.a-color-price')
     );
@@ -61,17 +56,29 @@ const scrapeAmazonProduct = async (url: string) => {
 
     const currency = extractCurrency($('.a-price-symbol'));
 
-    const discountRate = $('span.savingsPercentage').text();
+    const discountRate = $('.savingsPercentage').text().replace(/[-%]/g, '');
 
-    console.log({
+    const description = extractDescription($);
+
+    //  Construct data object with scrapped info
+
+    const data = {
+      url,
+      currency: currency || '$',
+      image: imgURLs[0],
       title,
-      currentPrice,
-      originalPrice,
-      outOfStock,
-      imgURLs,
-      currency,
-      discountRate,
-    });
+      currentPrice: Number(currentPrice) || Number(originalPrice),
+      originalPrice: Number(originalPrice) || Number(currentPrice),
+      priceHistory: [],
+      discountRate: Number(discountRate),
+      isOutOfStock: outOfStock,
+      description,
+      lowestPrice: Number(currentPrice) || Number(originalPrice),
+      highestPrice: Number(originalPrice) || Number(currentPrice),
+      averagePrice: Number(currentPrice) || Number(originalPrice),
+    };
+
+    return data;
   } catch (error: any) {
     throw new Error(`Failed to scrape data: ${error.message}`);
   }
