@@ -6,7 +6,7 @@ export const extractPrice = (...elements: Cheerio<AnyNode>[]) => {
     const priceText = element.text().trim();
 
     if (priceText) {
-      const cleanPrice = priceText.replace(/[^\d.]/g, '');
+      const cleanPrice = priceText.replace(',', '.').replace(/[^\d.]/g, '');
 
       let firstPrice;
 

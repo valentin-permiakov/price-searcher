@@ -1,6 +1,5 @@
 'use client';
 import scrapeAndStoreProduct from '@/lib/actions/scrapeAndStoreProduct';
-import scrapeAmazonProduct from '@/lib/scraper/scrapeAmazonProduct';
 import React, { FormEvent, useState } from 'react';
 
 type SearchBarProps = {};
