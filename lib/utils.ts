@@ -6,7 +6,7 @@ export const extractPrice = (...elements: Cheerio<AnyNode>[]) => {
     const priceText = element.text().trim();
 
     if (priceText) {
-      const cleanPrice = priceText.replace(',', '.').replace(/[^\d.]/g, '');
+      const cleanPrice = priceText.replace(',', '').replace(/[^\d.]/g, '');
 
       let firstPrice;
 
@@ -81,3 +81,10 @@ export function extractDescription($: CheerioAPI) {
   // If no matching elements were found, return an empty string
   return '';
 }
+
+export const formatNumber = (num: number = 0) => {
+  return num.toLocaleString(undefined, {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+};

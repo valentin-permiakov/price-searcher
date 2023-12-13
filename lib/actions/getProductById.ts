@@ -1,9 +1,14 @@
 'use server';
 
+import { ProductType } from '@/types';
 import Product from '../models/product.model';
 import connectToDB from '../mongoose';
 
-const getProductById = async (productId: string) => {
+type GetProductByIdType = (
+  productId: string
+) => Promise<ProductType | null | undefined>;
+
+const getProductById: GetProductByIdType = async (productId) => {
   try {
     connectToDB();
 
