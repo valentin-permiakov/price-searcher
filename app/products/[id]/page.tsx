@@ -1,4 +1,5 @@
 import ProductCard from '@/components/ProductCard';
+import Modal from '@/components/ProductPage/Modal';
 import PriceInfoCard from '@/components/ProductPage/PriceInfoCard';
 import ProductDescription from '@/components/ProductPage/ProductDescription';
 import ProductHeader from '@/components/ProductPage/ProductHeader';
@@ -78,7 +79,7 @@ const ProductDetails: React.FC<ProductDetailsProps> = async ({
               />
             </div>
           </div>
-          Modal
+          <Modal productId={id} />
         </div>
       </div>
 
