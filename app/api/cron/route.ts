@@ -12,7 +12,11 @@ import {
 import { User } from '@/types';
 import { NextResponse } from 'next/server';
 
-const GET = async () => {
+export const maxDuration = 300; //5 minutes
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+
+export async function GET() {
   try {
     connectToDB();
 
@@ -44,7 +48,7 @@ const GET = async () => {
         };
 
         const updatedProduct = await Product.findOneAndUpdate(
-          { url: scrapedProduct.url },
+          { url: product.url },
           product
         );
 
@@ -81,6 +85,6 @@ const GET = async () => {
   } catch (error) {
     throw new Error(`Failed in GET ${error}`);
   }
-};
+}
 
 export default GET;
