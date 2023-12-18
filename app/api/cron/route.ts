@@ -78,7 +78,7 @@ export async function GET(request: Request) {
       })
     );
 
-    return NextResponse.json({
+    return Response.json({
       message: 'Ok',
       data: updatedProducts,
     });
