@@ -3,7 +3,6 @@ import { User } from '@/types';
 import Product from '../models/product.model';
 import generateEmailBody from '../nodemailer/generateEmailBody';
 import sendEmail from '../nodemailer/sendEmail';
-import connectToDB from '../mongoose';
 
 const addUserEmailToProduct = async (productId: string, userEmail: string) => {
   try {
