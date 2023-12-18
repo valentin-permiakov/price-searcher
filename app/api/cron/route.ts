@@ -12,7 +12,7 @@ import {
 import { User } from '@/types';
 import { NextResponse } from 'next/server';
 
-export const maxDuration = 300; //5 minutes
+export const maxDuration = 10; // 10 seconds
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
 
